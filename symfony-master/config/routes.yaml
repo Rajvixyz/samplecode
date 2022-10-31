@@ -1,0 +1,11 @@
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+app_index:
+    path: /
+    controller: App\Controller\IndexController::index
+    
+    
+app_testscenario:
+    path: /testscenario
+    controller: App\Controller\IndexController::testscenario  

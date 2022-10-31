@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    Question 1: Total Pricing :</br>
+   
+    {% for eletronicItem in eletronicItems %}
+        <li>Item : {{ eletronicItem.Item }}  Price :{{ eletronicItem.Price }}</li>
+    {% endfor %}
+    </br>
+   Total Price : {{ total_price }}
+    </br>
+    Question 2 - Purchase Info : </br>
+    {{ console.getPurchased['product']['type'] |raw }} {{ console.getPurchased['product']['price'] |raw }}
+    {% for extraItem in console.getPurchased['product']['extra_items'] %}
+        <li>Extra Item : {{ console.getPurchased['product']['extra_type'] }} Price : {{ console.getPurchased['product']['extra_price'] }}</li>
+    {% endfor %}
+</div>
+{% endblock %}
