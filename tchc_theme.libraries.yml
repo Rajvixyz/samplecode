@@ -1,0 +1,28 @@
+global:
+  version: VERSION
+  css:
+    base:
+      dist/main.css: {}
+    theme:
+      dist/print.css: { media: print }
+  js:
+    dist/main.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+ypAlerts:
+  dependencies:
+    - core/drupal
+    - core/jquery
+  js:
+    ypAlerts/ypAlerts.js: {}
+fancybox:
+  version: VERSION
+  css:
+    base: 
+      "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css": { type: external }
+  js:
+    "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js": 
+      type: external
+      attributes: { minified: true }
+    dist/fancybox_init.js: {}

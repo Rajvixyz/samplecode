@@ -1,0 +1,24 @@
+name: Toronto Community Housing Theme
+type: theme
+description: 'A custom theme for OnPoint WebOps Drupal, specially made for Toronto Community Housing'
+package: Core
+version: VERSION
+core_version_requirement: ^8 || ^9
+project: 'tchc_theme'
+base theme: false
+
+libraries:
+  - core/normalize
+  - tchc_theme/global
+
+regions:
+  top_utility: Top Utility
+  header: Header
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  above_content: 'Above content'
+  sidebar: "Sidebar"
+  content: Content
+  below_content: 'Below content'
+  footer: Footer
+  hidden_listings: 'Hidden listings'
