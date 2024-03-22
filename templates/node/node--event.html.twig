@@ -1,0 +1,68 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+
+{% set banner_image = {
+  '#theme': 'image_style',
+  '#style_name':  'responsive_1550',
+  '#uri': node.field_event_image.entity.field_media_image.entity.uri[0].value,
+  '#alt': node.field_event_image.entity.field_media_image[0].alt,
+  '#attributes' : { class:''},
+} %}
+
+{% if node.field_event_image.entity.field_media_image.entity.uri[0].value is not null %}
+  <picture class="banner-image" role="banner">
+    {{ banner_image }}
+  </picture>
+{% endif %}
+
+  <article{{attributes.addClass(classes)}}>
+
+      <div class="event-page__title">
+        <div class="event-widget-component__item__date">
+          {{ content.field_start_date_time[0]['#attributes']['datetime']|date("M") }}
+          <br>
+          <strong>{{ content.field_start_date_time[0]['#attributes']['datetime']|date("d") }}</strong>
+        </div>
+
+        <h1>{{ node.label }}</h1>
+      </div>
+
+      <div class="event-date-pullout">
+        <p>
+          {% if content.field_all_day.0["#markup"] != 'All Day' %}
+            {{ content.field_start_date_time[0]['#attributes']['datetime']|date("F j, Y") }}
+            <br>
+            {{ content.field_start_date_time }}{% if content.field_end_date_time.0 is not null %} to {{ content.field_end_date_time }}{% endif %}
+            <br>
+          {% endif %}
+
+          {{ node.field_event_location[0].value|nl2br }}
+
+          {% if node.field_address.value is not empty or node.field_city_town.value is not empty %}
+            <br>
+            {% if node.field_map_link.0.uri is not empty %}<a href="{{ node.field_map_link.0.uri }}" target="_blank">{% endif %}
+              {{ node.field_address.value }}{% if node.field_city_town.value is not empty %}, {{ node.field_city_town.value }}{% endif %}
+            {% if node.field_map_link.0.uri is not empty %}</a>{% endif %}
+          {% endif %}
+
+        </p>
+      </div>
+
+      <div class="event-description">
+        <h2>{{ 'Event description'|t() }}</h2>
+        {{ content.field_event_description }}
+        {{ content.field_event_link }}
+      </div>
+
+      {% if content %}
+        {{ content|without('field_start_date_time', 'field_end_date_time', 'field_event_description', 'field_event_link', 'field_all_day') }}
+      {% endif %}
+  </article>

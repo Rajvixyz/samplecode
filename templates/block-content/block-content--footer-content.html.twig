@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block content.
+ *
+ * @see template_preprocess_block_content_template()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'block-content',
+    'block-content--type-' ~ bundle|clean_class,
+    'block-content--' ~ id,
+    'block-content--view-mode-' ~ view_mode|clean_class,
+    'footer_content'
+  ]
+%}
+<section{{ attributes.addClass(classes) }}>
+   <div class="field_section_title_1, field_section_1_content">
+    <h2>{{ content.field_section_title_1 }}</h2>
+     <p>{{ content.field_section_1_content }}</p>
+  </div>
+   <div class="field_section_2_title, field_section_2_content">
+   <h2>{{ content.field_section_2_title }}</h2>
+    <p>{{ content.field_section_2_content }}</p>
+  </div>
+  </section>

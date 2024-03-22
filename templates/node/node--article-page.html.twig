@@ -1,0 +1,50 @@
+{%
+  set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+{% set banner_image = {
+  '#theme': 'image_style',
+  '#style_name':  'responsive_1550',
+  '#uri': node.field_feature_image.entity.field_media_image.entity.uri[0].value,
+  '#alt': node.field_feature_image.entity.field_media_image[0].alt,
+  '#attributes' : { class:''},
+} %}
+
+{% if node.field_feature_image.entity.field_media_image.entity.uri[0].value is not null %}
+  <picture class="banner-image" role="banner">
+    {{ banner_image }}
+  </picture>
+{% endif %}
+
+
+{% if content %}
+  <article{{attributes.addClass(classes)}}>
+
+    {% if node.field_enable_social_share.value == '1' %}
+      {% include '@tchc_theme/_partials/share.html.twig' with {'floating': '1'} %}
+    {% endif %}
+    
+    <div class="page-intro-group {{ node.field_article_subtitle.value ? 'has-intro' : 'no-intro' }}">
+      <h1> {{ node.label }} </h1>
+
+      {% if node.field_article_subtitle.value %}
+        <p class="intro-text">{{ node.field_article_subtitle.value }}</p>
+      {% endif %}
+
+       <time class="article-time">{{ content.field_publication_date }}</time>
+    </div>
+
+    {{ content|without('field_publication_date') }}
+
+    {% if node.field_enable_social_share.value == '1' %}
+      {% include '@tchc_theme/_partials/share.html.twig' with {'floating': '0'} %}
+    {% endif %}
+  </article>
+{% endif %}

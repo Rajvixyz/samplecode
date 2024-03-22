@@ -1,0 +1,20 @@
+{# <button id="scrollTop">{{ 'Back to top'|t }}</button> #}
+
+{% if page.footer %}
+  <img class="footer-image" src="{{ base_path ~ directory }}/images/tchc-cityscape-Illustration.svg" alt="" role="presentation">
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content-container">
+        {{ page.footer }}
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; Toronto Community Housing Corporation {{ 'now' | date('Y')}}</p>
+    </div>
+  </footer>
+{% endif %}
+
+
+
+
+

@@ -1,0 +1,31 @@
+{%
+  set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+<article{{attributes.addClass(classes)}}>
+  <div class="page-intro-group {{ content.field_intro_text.value ? 'has-intro' : 'no-intro' }}">
+    <h1>{{ node.label }}</h1>
+    {{ content.field_intro_text }}
+  </div>
+
+  {% if content.field_featured_events|render or content.field_field_section_title_h2|render %}
+    <div class="feature-item-group version--event-listing component-spacing">
+      <h2>{{ content.field_field_section_title_h2 }}</h2>
+
+      <div class="group-wrapper">
+        {{ content.field_featured_events }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if content %}
+    {{ content|without('field_intro_text', 'field_field_section_title_h2', 'field_featured_events') }}
+  {% endif %}
+</article>

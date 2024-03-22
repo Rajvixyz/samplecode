@@ -1,0 +1,46 @@
+{# We want the social media image as the image, but if it's not available get the banner image as a fallback #}
+{% set uri = node.field_featured_image.entity.field_media_image.entity.uri[0].value ? node.field_featured_image.entity.field_media_image.entity.uri[0].value : node.field_event_image.entity.field_media_image.entity.uri[0].value %}
+{% set alt = node.field_featured_image.entity.field_media_image[0].alt ? node.field_featured_image.entity.field_media_image[0].alt : node.field_event_image.entity.field_media_image[0].alt %}
+
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'feature-item',
+    'version--event',
+    uri ? 'has-image' : 'no-image',
+  ]
+%}
+
+{% set paragraph_image = {
+  '#theme': 'image_style',
+  '#style_name':  'child_pages_thumbnail',
+  '#uri': uri,
+  '#alt': alt,
+  '#attributes' : { class:'feature-item__image'},
+  } 
+%}
+
+<a{{attributes.addClass(classes)}} href="{{ url }}">
+
+  {% if uri is not null %}
+    {{ paragraph_image }}
+  {% endif %}
+
+  <div class="feature-item__content">
+    <div class="feature-item__date">
+      {{ content.field_start_date_time[0]['#attributes']['datetime']|date("M") }}
+      <strong>{{ content.field_start_date_time[0]['#attributes']['datetime']|date("d") }}</strong>
+    </div>
+
+    <h3>{{ label }}</h3>
+    {% if content.field_all_day.0["#markup"] != 'All Day' %}
+      <p class="feature-item__time"><strong>{{ content.field_start_date_time }}{% if content.field_end_date_time.0 is not null %} to {{ content.field_end_date_time }}{% endif %}</strong></p>
+    {% endif %}
+    <p class="feature-item__address">{{ node.field_event_location[0].value }}{% if node.field_address.value|render %}, {% endif %} {{ node.field_address.value }}{% if node.field_address.value|render %}, {% endif %} {{ node.field_city_town.value }}</p>
+  </div>
+</a>

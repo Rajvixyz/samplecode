@@ -1,0 +1,26 @@
+{% include '@tchc_theme/header.html.twig' %}
+
+{{ page.above_content }}
+
+<main role="main">
+  {# link is in html.html.twig #}
+  <a id="main-content" tabindex="-1"></a>
+
+  {% set banner_image = {
+    '#theme': 'image_style',
+    '#style_name':  'responsive_1550',
+    '#uri': node.field_banner_image.entity.field_media_image_2.entity.uri[0].value,
+    '#alt': node.field_banner_image.entity.field_media_image_2[0].alt,
+    '#attributes' : { class:''},
+  } %}
+
+  {% if node.field_banner_image.entity.field_media_image_2.entity.uri[0].value is not null %}
+    <picture class="banner-image" role="banner">
+      {{ banner_image }}
+    </picture>
+  {% endif %}
+
+  {{ page.content }}
+</main>
+
+{% include '@tchc_theme/footer.html.twig' %}

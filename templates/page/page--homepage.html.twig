@@ -1,0 +1,16 @@
+{% set sidebar = page.sidebar %}
+
+{% include '@tchc_theme/header.html.twig' %}
+
+{{ page.above_content }}
+
+<main role="main">
+  {# link is in html.html.twig #}
+  <a id="main-content" tabindex="-1"></a>
+
+  <div class="layout-content {{ sidebar ? 'has-sidebar' : 'no-sidebar' }}">
+    {{ page.content }}
+  </div>
+</main>
+
+{% include '@tchc_theme/footer.html.twig' %}

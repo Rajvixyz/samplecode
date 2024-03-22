@@ -1,0 +1,42 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'event-widget-item'
+  ]
+%}
+
+{% set event_image = {
+  '#theme': 'image_style',
+  '#style_name':  'child_pages_thumbnail',
+  '#uri': node.field_event_image.entity.field_media_image.entity.uri[0].value,
+  '#attributes' : { class:'event-widget-item__img'},
+} %}
+
+
+<a href="{{ url }}" {{attributes.addClass(classes)}} aria-label="{{ label.0 }}">
+	{% if node.field_event_image.entity.field_media_image.entity.uri[0].value is not null %}
+		{{ event_image }}
+	{% endif %}
+
+  <div class="content-wrapper">
+    <div class="event-widget-item__date">
+      {{ content.field_start_date_time[0]['#attributes']['datetime']|date("M") }}
+      <strong>{{ content.field_start_date_time[0]['#attributes']['datetime']|date("d") }}</strong>
+    </div>
+
+    <div class="event-widget-item__content">
+      <h3>{{ label }}</h3>
+      <div class="time-address">
+        <time>{{ content.field_start_date_time }}{% if content.field_end_date_time.0 is not null %}to{{ content.field_end_date_time }}{% endif %}</time>
+        {% if content.field_address|render or content.field_event_location|render %}
+          <p class="address">{{ content.field_event_location }} {{ content.field_address }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</a>

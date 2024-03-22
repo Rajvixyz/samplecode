@@ -1,0 +1,50 @@
+{%
+  set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+<a{{attributes.addClass(classes)}} href="{{ url }}">
+
+  <div class="event-date">
+    {{ content.field_start_date_time[0]['#attributes']['datetime']|date("M") }}
+    <strong>{{ content.field_start_date_time[0]['#attributes']['datetime']|date("d") }}</strong>
+  </div>
+
+	<div class="content-wrapper">
+		<h3>{{ node.label }}</h3>
+
+		{{ content.field_event_description }}
+
+    <div class="time-address">
+      {% if content.field_all_day.0["#markup"] != "All Day" %}
+        <time>
+          {{ content.field_start_date_time }} 
+          {% if content.field_end_date_time|render %}
+            to {{ content.field_end_date_time }}
+          {% endif %}
+        </time>
+      {% endif %}
+      <p class="address">{{ content.field_address }}</p>
+    </div>
+
+
+		{% if content.field_event_category|render or content.field_program_name|render %}
+			<div class="taxonomies">
+				{% if content.field_event_category|render %}
+					{{content.field_event_category}}
+				{% endif %}
+
+				{% if content.field_program_name|render %}
+					{{content.field_program_name}}
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+</a>
+

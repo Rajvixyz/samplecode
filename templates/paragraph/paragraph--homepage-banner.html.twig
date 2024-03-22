@@ -1,0 +1,36 @@
+{%
+  set classes = [
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+
+{% block paragraph %}
+	<section{{attributes.addClass(classes)}} role="banner">
+		{% block content %}
+			<div class="home-banner-tile--main home-banner-tile">
+				{{ content.field_feature_content_image }}
+				<a class="homeBanner_text banner-tile-text sm_link" href="{{ content.field_feature_content_link.0['#url'] }}" aria-label="{{ content.field_feature_content_link.0['#title'] }}">
+					<p>{{ content.field_feature_content_text }}</p>
+					<span>{{ content.field_feature_content_link.0['#title'] }}</span>
+				</a>
+			</div>
+			<div class="home-banner-tile--top home-banner-tile">
+				{{ content.field_top_content_image }}
+				<a class="homeBanner_text banner-tile-text sm_link" href="{{ content.field_secondary_content_link.0['#url'] }}" aria-label="{{ content.field_secondary_content_link.0['#title'] }}">
+					<p>{{ content.field_top_content_text }}</p>
+					<span>{{ content.field_secondary_content_link.0['#title'] }}</span>
+				</a>
+			</div>
+
+			<div class="home-banner-tile--bottom home-banner-tile">
+				{{ content.field_bottom_content_image }}
+				<a class="homeBanner_text banner-tile-text sm_link" href="{{ content.field_bottom_content_link.0['#url'] }}" aria-label="{{ content.field_bottom_content_link.0['#title'] }}">
+					<p>{{ content.field_bottom_content_text }}</p>
+					<span>{{ content.field_bottom_content_link.0['#title'] }}</span>
+				</a>
+			</div>
+		{% endblock %}
+	</section>
+{% endblock paragraph %}

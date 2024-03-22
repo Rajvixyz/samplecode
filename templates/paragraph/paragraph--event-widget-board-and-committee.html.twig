@@ -1,0 +1,26 @@
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+{% block paragraph %}
+	<div{{attributes.addClass(classes)}}>
+		<div class="event-board-committee__title text-centered">
+			{% if paragraph.field_section_title_h2 %}
+				<h2>{{ paragraph.field_section_title_h2.value }}</h2>
+			{% endif %}
+
+      {% if content.field_linked_page|render %}
+        <a href="{{ content.field_linked_page.0['#url'] }}" class="event-widget-component__button btn-secondary" aria-label="{{ content.field_linked_page.0['#title'] }}">{{ content.field_linked_page.0['#title'] }}</a>
+      {% endif %}
+		</div>
+		{% block content %}
+			<div class="event-board-committee-content">
+				{{ content|without('field_linked_page') }}
+			</div>
+		{% endblock %}
+	</div>
+{% endblock paragraph %}

@@ -1,0 +1,47 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class
+  ]
+%}
+
+{{ content.field_banner_content }}
+
+<article{{attributes.addClass(classes)}}>
+	{% if content.field_action_bar is not empty %}
+		<div class="action-wrapper">
+			{{ content.field_action_bar }}
+		</div>
+	{% endif %}
+
+	{% if content.field_related_content_section|render %}
+		<div class="paragraph--type--related-content component-spacing">
+			<h2 class="text-centered">{{ content.field_related_section_title }}</h2>
+			<div class="related-content__items">
+				{{ content.field_related_content_section }}
+			</div>
+		</div>
+	{% endif %}
+
+	{{ content.field_board_committee_events }}
+
+	{% if content.field_featured_events_homepage|render %}
+		<div class="feature_events_wrapper_home feature-item-group component-spacing]">
+			<div class="featured_eventsHeading text-centered">
+				<h2>{{ content.field_field_section_title_h2 }}</h2>
+				<a href="/events" class="event-widget-component__button btn-secondary" aria-label="See all events">{{ 'See all events'|t() }}</a>
+			</div>
+			<div class="group-wrapper">
+				{{ content.field_featured_events_homepage }}
+			</div>
+		</div>
+	{% endif %}
+
+	{% if content|keys|without(['field_action_bar', 'field_linked_page'])|length > 0 %}
+		{{ content|without(['field_action_bar', 'field_linked_page', 'field_banner_content', 'field_related_content_section', 'field_related_section_title', 'field_banner_content', 'field_featured_events_homepage', 'field_field_section_title_h2', 'field_board_committee_events']) }}
+	{% endif %}
+</article>

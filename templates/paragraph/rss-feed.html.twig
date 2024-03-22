@@ -1,0 +1,78 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display an rss feed.
+ *
+ * Available variables:
+ * - title: The channel title.
+ * - items: List of all the field items. Each item contains:
+ *   - title: The title of the item.
+ *   - description: The item synopsis.
+ *   - link: The URL of the item.
+ *   - pubDate: The pubDate of the item.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="rss-embed-field-feed">
+	{% if title %}
+		<strong class="rss-embed-field-feed-title">{{ title }}</strong>
+	{% endif %}
+	<div class="rss-embed-field-feed-items">
+		<table id="tenderTable" class="table table-hover">
+			{% set feedurl = items.0.feedlink %}
+			{% if 'taleo' not in feedurl %}
+				<thead>
+					<tr>
+						<th>Release date</th>
+						<th>Bid #</th>
+						<th>Title</th>
+					</tr>
+				</thead>
+				<tbody>
+                
+					{% for item in items  %}
+ 
+						<tr>
+							<td>{{ item.pubdate|date("D, d M Y") }}</td>
+                            {# Generate Bid # from title #}
+                            {% set bidNumber = [item.title|split(' ')[2], ' ', item.title|split(' ')[3]] | join %}
+
+                            {# If the bid number ends in a . remove it #}
+                            {% if bidNumber|last == "." %}
+                                {% set bidNumber = bidNumber|trim('.') %}
+                            {% endif %}
+							<td>{{ bidNumber }}</td>
+							<td>
+								<a target="_blank" href="{{ item.link }}" class="rss-embed-field-feed-item-title">{{ item.title }}</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			{% endif %}
+			{% if 'bonfirehub' not in feedurl %}
+
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Posting Date</th>
+						<th>Location</th>
+						<th>Department</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in items %}
+						<tr>
+							<td>
+								<a target="_blank" href="{{ item.link }}" class="rss-embed-field-feed-item-title">{{ item.title }}</a>
+							</td>
+							<td>{{ item.pubdate|date("D, d M Y") }}</td>
+							<td>{{ item.location }}</td>
+							<td>{{ item.department }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			{% endif %}
+		</table>
+	</div>
+</div>
